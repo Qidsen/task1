@@ -1,5 +1,9 @@
 export default [
   {
+    path: '*',
+    redirect: '/news',
+  },
+  {
     path: '/login',
     component: () => import('@/views/Login'),
   },

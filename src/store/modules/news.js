@@ -5,9 +5,9 @@ export default {
     pieceOfNews:
     [
       {
-        id: 0,
-        title: "",
-        text: "",
+        id: null,
+        title: null,
+        text: null,
       },
     ],
   },

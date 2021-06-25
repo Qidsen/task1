@@ -3,12 +3,13 @@ export default {
   state: {
     unique: {
       status: "",
-      id: 0,
+      id: null,
     },
     info: {
-      city: "",
-      languages: [],
-      social: [],
+      city: null,
+      languages: null,
+      social: null,
+      image: null,
     },
   },
   getters: {
