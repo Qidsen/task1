@@ -7,8 +7,12 @@
     >
       <template v-slot:extension>
         <v-tabs>
-          <v-tab>Profile</v-tab>
-          <v-tab>News</v-tab>
+          <router-link to="/profile">
+            <v-tab>Profile</v-tab>
+          </router-link>
+          <router-link to="/news">
+            <v-tab>News</v-tab>
+          </router-link>
         </v-tabs>
       </template>
     </v-app-bar>

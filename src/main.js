@@ -3,6 +3,7 @@ import App from './App.vue'
 import axios from 'axios'
 import router from '@/router'
 import Vuetify from 'vuetify'
+import store from '@/store/store'
 
 import 'vuetify/dist/vuetify.min.css'
 
@@ -16,6 +17,7 @@ Vue.use(Vuetify)
 Vue.config.productionTip = false
 
 new Vue({
+  store,
   router,
   vuetify: new Vuetify({}),
   render: h => h(App),

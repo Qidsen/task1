@@ -25,7 +25,7 @@
         >
           Login
         </v-btn>
-        <span v-if="!validData">Invalid email or password</span>
+        <span v-if="unique.status == 'err'">Invalid email or password</span>
       </v-form>
     </template>
   </div>
@@ -33,7 +33,7 @@
 
 <script>
 const axios = require('axios');
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   name: 'Login',
@@ -53,17 +53,17 @@ export default {
     },
   }),
   methods: {
-    ...mapState("user", {
-      //getStatus: 'status',
-      getUserById: 'id',
-    }),
+    ...mapMutations('user', ['setUnique']),
+
     async login() {
       try {
         const { data } = await axios.post('/validate', this.form);
         this.validData = true;
-        this.getUserById = data.data.id;
+        this.setUnique({status: data.status, id: data.data.id});
+        this.$router.push('/news');
       }
       catch (e) {
+        this.setUnique({status: "err"});
         this.validData = false;
         this.form.email = "";
         this.form.password = "";
@@ -71,6 +71,9 @@ export default {
       }
     },
   },
+  computed: {
+    ...mapState("user", ['unique'])
+  }
 }
 
 </script>
