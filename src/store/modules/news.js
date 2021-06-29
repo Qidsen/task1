@@ -1,15 +1,10 @@
+import axios from 'axios';
+
 export default {
   namespaced: true,
   state: {
     status: "",
-    pieceOfNews:
-    [
-      {
-        id: null,
-        title: null,
-        text: null,
-      },
-    ],
+    pieceOfNews: [],
   },
   getters: {
     getStatus(state) {
@@ -28,6 +23,15 @@ export default {
   mutations: {
     setPieceOfNews(state, payload) {
       state.pieceOfNews.push(payload);
+    },
+  },
+  actions: {
+    getNews ({ commit }) {
+      return axios.get('/news').then(({ data }) => {
+        for(let i = 0; i < data.data.length; i++) {
+          commit('setPieceOfNews', {id: data.data[i].id, title: data.data[i].title, text: data.data[i].text});
+        }
+      })
     },
   },
 }

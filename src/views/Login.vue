@@ -1,45 +1,48 @@
 <template>
-  <div>
+  <div class="webpage__login">
     <template>
       <v-form v-model="validInput">
-        <v-text-field
-          v-model="form.email"
-          :rules="[rules.required, rules.email]"
-          label="Email"
-          required
-        ></v-text-field>
+        <div class="webpage__login-input">
+          <v-text-field
+            v-model="form.email"
+            :rules="[rules.required, rules.email]"
+            label="Email"
+            required
+          ></v-text-field>
 
-        <v-text-field
-          type="password"
-          v-model="form.password"
-          :rules="[rules.required]"
-          label="Password"
-          required
-        ></v-text-field>
+          <v-text-field
+            type="password"
+            v-model="form.password"
+            :rules="[rules.required]"
+            label="Password"
+            required
+          ></v-text-field>
+        </div>
 
-        <v-btn
-          :disabled="!validInput"
-          color="success"
-          class="mr-4"  
-          @click="login"
-        >
-          Login
-        </v-btn>
-        <span v-if="unique.status == 'err'">Invalid email or password</span>
+        <div class="webpage__login-submit">
+          <span v-if="unique.status == 'err'">Invalid email or password</span>
+          <v-btn
+            :disabled="!validInput"
+            color="success"
+            class="mr-4"  
+            @click="login"
+          >
+            Login
+          </v-btn>
+        </div>
       </v-form>
     </template>
   </div>
 </template>
 
 <script>
-const axios = require('axios');
-import { mapState, mapMutations } from 'vuex';
+
+import { mapState, mapActions, mapMutations } from 'vuex';
 
 export default {
   name: 'Login',
   data: () => ({
     validInput: false,
-    validData: true,
     form: {
       email: '',
       password: '',
@@ -53,31 +56,63 @@ export default {
     },
   }),
   methods: {
+    ...mapActions('auth', ['makeLogin']),
     ...mapMutations('user', ['setUnique']),
 
     async login() {
       try {
-        const { data } = await axios.post('/validate', this.form);
-        this.validData = true;
-        this.setUnique({status: data.status, id: data.data.id});
-        this.$router.push('/news');
+        await this.makeLogin(this.form)
+        this.$router.push('/profile');
       }
       catch (e) {
-        this.setUnique({status: "err"});
-        this.validData = false;
-        this.form.email = "";
+        this.setUnique({ status: 'err' });
         this.form.password = "";
-        console.log("Wrong email or password!");
       }
     },
   },
   computed: {
-    ...mapState("user", ['unique'])
+    ...mapState('user', ['unique']),
   }
 }
 
 </script>
 
 <style lang="scss">
+  .webpage__login {
+    display: flex;
 
+    form {
+      width: 100%;
+      margin: 60px 320px;
+      padding: 60px 60px;
+      background: #1A759F;
+      border-radius: 8px;
+
+      .webpage__login-input, .webpage__login-submit {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .v-text-field {
+          width: 100%;
+          max-width: 512px;
+          display: flex;
+          justify-content: center;
+
+          .v-text-field__slot {
+            height: 64px;
+            border: 2px solid #E9C46A;
+            background: transparent;
+            box-sizing: border-box;
+            border-radius: 8px;
+          }
+        }
+
+        .v-btn {
+          margin-top: 250px;
+        }
+      }
+    }
+  }
 </style>

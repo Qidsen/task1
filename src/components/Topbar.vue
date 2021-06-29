@@ -11,24 +11,27 @@
             <v-tab>Profile</v-tab>
           </router-link>
           <router-link to="/news">
-            <v-tab>News</v-tab>
+            <v-tab>News</v-tab> 
           </router-link>
         </v-tabs>
-        <router-link to="/login">
-          <v-btn block>
-            {{ unique.id ? "Log Out" : "Log In" }}
-          </v-btn>
-        </router-link>
+        <v-btn 
+          block
+          @click="!unique.id ? logIn() : logOut()">
+            {{ !unique.id ? "Log In" : "Log Out" }}
+        </v-btn>
       </template>
     </v-app-bar>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: "Topbar",
+  methods: {
+    ...mapActions('auth', ['logIn', 'logOut']),
+  },
   computed: {
     ...mapState('user', ['unique']),
   }

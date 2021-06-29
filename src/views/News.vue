@@ -1,6 +1,6 @@
 <template>
   <div class="webpage__news">
-    <Loader v-if="loading"/>
+    <Loader v-if="!pieceOfNews.length"/>
     <div v-else class="webpage__news-info">
       <p v-for="(item, index) in pieceOfNews" :key="index">{{ item.title }}
         <br>
@@ -8,44 +8,33 @@
           {{ item.text }}
         </span>
       </p>
+      <p class="webpage__news-amount">
+        <span>
+          Total news: {{ pieceOfNews.length }}
+        </span>
+      </p>
     </div>
   </div>
 </template>
 
 <script>
-const axios = require('axios');
-import { mapState, mapMutations } from 'vuex';
+
+import { mapState, mapActions } from 'vuex';
 import Loader from '@/components/Loader';
 
 export default {
   name: "News",
-  data() {
-    return {
-      loading: false,
-    }
-  },
   methods: {
-    ...mapMutations('news', ['setPieceOfNews']),
+    ...mapActions('news', ['getNews']),
   },
-  
-  async created() {
-    if(this.pieceOfNews[0].id == null) {
-      this.loading = true;
-      const { data } = await axios.get('/news');
-      setTimeout(() => {
-        for(let i = 0; i < data.data.length; i++) {
-          this.setPieceOfNews({id: data.data[i].id, title: data.data[i].title, text: data.data[i].text});
-        }
-        this.pieceOfNews.shift();
-        this.loading = false;
-      }, 1000);
-    }
-  },
-
   computed: {
     ...mapState('news', ['pieceOfNews']),
   },
-
+  async created() {
+    if(!this.pieceOfNews.length) {
+      await this.getNews(this.pieceOfNews);
+    }
+  },
   components: {
     Loader,
   },
@@ -78,6 +67,19 @@ export default {
           font-size: 24px;
           font-weight: 500;
           line-height: 28px;
+        }
+      }
+
+      .webpage__news-amount {
+        background: transparent;
+        padding: 0;
+
+        span {
+          font-size: 48px;
+          font-weight: 600;
+          text-shadow:black 1px 1px 0, black 2px 2px 0, 
+                      black 3px 3px 0, black 4px 4px 0, 
+                      black 5px 5px 0;
         }
       }
     }

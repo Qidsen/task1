@@ -22,10 +22,9 @@
 </template>
 
 <script>
-const axios = require('axios');
-import { mapState, mapMutations } from 'vuex';
+
+import { mapState, mapActions } from 'vuex';
 import Loader from '@/components/Loader';
-import {LINK_ICONS} from '@/constants/LINKS';
 
 export default {
   name: 'Profile',
@@ -33,33 +32,23 @@ export default {
     return {
       loading: true,
       dataInfo: true,
-      icons: LINK_ICONS,
     }
   },
   methods: {
-    ...mapMutations('user', [
-      'setInfo',
-    ]),
+    ...mapActions('user', ['getProfile']),
   },
-
-  async created() {
-    if(this.unique.id == null) {
-      this.loading = false;
-      this.dataInfo = false;
-      return;
-    }
-    const { data } = await axios.get(`/user-info/${this.unique.id}`);
-    setTimeout(() => {
-      this.setInfo({city: data.data.city, languages: data.data.languages, social: data.data.social, image: this.icons});
-      this.loading = false;
-    }, 1000);
-    console.log(this.info);
-  },
-
   computed: {
     ...mapState('user', ['unique', 'info']),
   },
-
+  async created() {
+    if(this.unique.id == null) {
+      this.dataInfo = false;
+      this.loading = false;
+      return;
+    }
+    await this.getProfile(this.unique);
+    this.loading = false;
+  },
   components: {
     Loader,
   },

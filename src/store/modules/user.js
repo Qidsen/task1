@@ -1,3 +1,6 @@
+import axios from 'axios';
+import {LINK_ICONS} from '@/constants/LINKS';
+
 export default {
   namespaced: true,
   state: {
@@ -14,10 +17,10 @@ export default {
   },
   getters: {
     getStatus(state) {
-      return state.status;
+      return state.unique.status;
     },
     getUserById(state) {
-      return state.id;
+      return state.unique.id;
     },
     getCity(state) {
       return state.info.city;
@@ -36,5 +39,12 @@ export default {
     setInfo(state, payload) {
       state.info = payload;
     }
+  },
+  actions: {
+    getProfile({ commit }, unique) {
+      return axios.get(`/user-info/${unique.id}`).then(({ data }) => {
+        commit('setInfo', {city: data.data.city, languages: data.data.languages, social: data.data.social, image: LINK_ICONS});
+      })
+    },
   },
 }
