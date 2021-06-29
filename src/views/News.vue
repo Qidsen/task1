@@ -54,7 +54,7 @@ export default {
       flex-direction: column;
 
       p {
-        margin: 100px 50px -50px 50px;
+        margin: 60px 50px 0px 50px;
         padding: 24px 24px;
         background: #1A759F;
         font-family: Rubik;
@@ -62,6 +62,7 @@ export default {
         font-weight: 700;
         line-height: 57px;
         color: white;
+        border-radius: 8px;
 
         span {
           font-size: 24px;
@@ -72,7 +73,7 @@ export default {
 
       .webpage__news-amount {
         background: transparent;
-        padding: 0;
+        padding: 0 0 40px 0;
 
         span {
           font-size: 48px;

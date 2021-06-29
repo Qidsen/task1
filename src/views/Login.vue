@@ -78,6 +78,9 @@ export default {
 </script>
 
 <style lang="scss">
+  .v-application .primary--text {
+    color: #eed390 !important;
+  }
   .webpage__login {
     display: flex;
 
@@ -100,12 +103,29 @@ export default {
           display: flex;
           justify-content: center;
 
+          .v-input__control .v-input__slot {
+            &:before, &:after {
+              display: none;
+            }
+          }
+
           .v-text-field__slot {
             height: 64px;
-            border: 2px solid #E9C46A;
             background: transparent;
             box-sizing: border-box;
-            border-radius: 8px;
+            label {
+              color: #E9C46A;
+              margin: 16px;
+            }
+            input {
+              padding: 14px;
+              max-height: 64px;
+              border: 2px solid #E9C46A;
+              border-radius: 8px;
+            }
+            input:-webkit-autofill {
+              -webkit-box-shadow: 0 0 0 64px #1A759F inset !important;
+            }
           }
         }
 
