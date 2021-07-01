@@ -63,6 +63,7 @@ export default {
         line-height: 57px;
         color: white;
         border-radius: 8px;
+        word-wrap: break-word;
 
         span {
           font-size: 24px;

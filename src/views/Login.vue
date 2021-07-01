@@ -20,11 +20,11 @@
         </div>
 
         <div class="webpage__login-submit">
-          <span v-if="unique.status == 'err'">Invalid email or password</span>
+          <span class="webpage__login-submit--error" v-show="showError">Email or password incorrect</span>
           <v-btn
             :disabled="!validInput"
             color="success"
-            class="mr-4"  
+            class="mr-4"
             @click="login"
           >
             Login
@@ -66,27 +66,41 @@ export default {
       }
       catch (e) {
         this.setUnique({ status: 'err' });
+        setTimeout(() => this.setUnique({ status: null }), 2000);
         this.form.password = "";
       }
     },
   },
   computed: {
     ...mapState('user', ['unique']),
-  }
+
+    showError() {
+      return !this.form.password && this.unique.status === 'err';
+    }
+  },
 }
 
 </script>
 
 <style lang="scss">
-  .v-application .primary--text {
-    color: #eed390 !important;
+  .v-application {
+    .primary--text {
+      color: #eed390 !important;
+    }
+    .success {
+      background-color: transparent !important;
+      border: 2px solid #E9C46A !important;
+    }
   }
   .webpage__login {
     display: flex;
+    box-sizing: border-box;
+    padding: 60px 60px;
 
     form {
       width: 100%;
-      margin: 60px 320px;
+      max-width: 1024px;
+      margin: 0 auto;
       padding: 60px 60px;
       background: #1A759F;
       border-radius: 8px;
@@ -96,6 +110,24 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: center;
+
+        .webpage__login-submit--error {
+          margin-top: 120px;
+          color: #ff5252;
+          font-family: Rubik;
+          font-size: 24px;
+          font-weight: 400;
+          line-height: 28px;
+        }
+
+        .v-btn {
+          color: #E9C46A;
+          width: 100%;
+          max-width: 225px;
+          margin-top: 200px;
+          height: 64px;
+          border-radius: 8px;
+        }
 
         .v-text-field {
           width: 100%;
@@ -127,10 +159,6 @@ export default {
               -webkit-box-shadow: 0 0 0 64px #1A759F inset !important;
             }
           }
-        }
-
-        .v-btn {
-          margin-top: 250px;
         }
       }
     }
