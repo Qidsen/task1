@@ -14,9 +14,6 @@ export default {
       state.unique = payload;
     },
     setInfo(state, payload) {
-      Array(payload).map(function(city, languages, social) {
-        {city, languages, social}
-      })
       state.info = payload;
     }
   },

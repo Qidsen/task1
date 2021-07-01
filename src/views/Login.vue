@@ -154,9 +154,15 @@ export default {
               max-height: 64px;
               border: 2px solid #E9C46A;
               border-radius: 8px;
+              color: white;
+              font-family: Rubik;
+              font-size: 20px;
+              font-weight: 400;
+              line-height: 28px;
             }
             input:-webkit-autofill {
               -webkit-box-shadow: 0 0 0 64px #1A759F inset !important;
+              -webkit-text-fill-color: white;
             }
           }
         }

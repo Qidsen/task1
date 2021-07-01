@@ -8,9 +8,6 @@ export default {
   },
   mutations: {
     setPieceOfNews(state, payload) {
-      Array(payload).map(function(id, title, text ) {
-        { id, title, text }
-      });
       state.pieceOfNews = payload;
     },
   },
