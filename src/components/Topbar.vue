@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex justify-space-between task1__topbar">
+  <div class="d-flex justify-space-between topbar">
     <v-app-bar
       flex
       color="#2A9D8F"
