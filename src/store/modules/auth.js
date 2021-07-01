@@ -14,7 +14,7 @@ export default {
     },
     makeLogin({ commit }, logParams) {
       return axios.post('/validate', logParams).then(({ data }) =>
-        commit('user/setUnique', { status: status, id: data.data.id }, { root: true }),
+        commit('user/setUnique', { status: data.status, id: data.data.id }, { root: true }),
       )
     },
   },

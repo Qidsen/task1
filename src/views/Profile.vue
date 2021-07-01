@@ -13,7 +13,8 @@
       <ul>
         <span>Links:</span>
         <li v-for="(item, index) in info.social" :key="'social' + index">
-          <a :href="`${item.link}`" rel="noopener noreferrer" target="_blank"> <img :src="require(`@/assets/img/svg/${info.image[index]}`)" :alt="`${info.image[index]}`">
+          <a :href="`${item.link}`" rel="noopener noreferrer" target="_blank"> 
+            <img :src="require(`@/assets/img/svg/${item.label}.svg`)" :alt="`${item.label}`">
           </a>
         </li>
       </ul>
